@@ -30,4 +30,16 @@ class CampusController extends Controller
             'pagination' => $pagination
         ]);
     }
+
+    /**
+     * Menampilkan detail kampus
+     * @param $id | int | string
+     * @return string view
+     */
+    public function actionView($id)
+    {
+        $campus = Campus::findOne(['campus_id' => $id]);
+
+        return $this->render('view', ['campus' => $campus]);
+    }
 }
