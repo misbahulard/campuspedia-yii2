@@ -6,8 +6,8 @@ use yii\widgets\LinkPager;
 use backend\assets\AdminLtePluginAsset;
 AdminLtePluginAsset::register($this);
 
-$this->title = 'Campus';
-$this->params['breadcrumbs'][] = ['label' => 'Campus', 'url' => ['index']];
+$this->title = 'Main Category';
+$this->params['breadcrumbs'][] = ['label' => 'Main Category', 'url' => ['index']];
 ?>
 
 <div class="campus-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Campus', 'url' => ['index']];
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Data Main Category</h3>
-                    <?= Html::a('Add new campus', ['campus/create'], ['class' => 'btn btn-success pull-right']) ?>
+                    <?= Html::a('Add new category', ['main-category/create'], ['class' => 'btn btn-success pull-right']) ?>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -34,9 +34,8 @@ $this->params['breadcrumbs'][] = ['label' => 'Campus', 'url' => ['index']];
                             <td><?= $category->main_category_id ?></td>
                             <td><?= $category->name ?></td>
                             <td>
-                                <a href="<?= Url::to(Url::base() . '/campus/view?id=' . $category->main_category_id) ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                <a href="<?= Url::to(Url::base() . '/campus/edit?id=' . $category->main_category_id) ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                <a href="<?= Url::to(Url::base() . '/campus/delete?id=' . $category->main_category_id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="<?= Url::to(Url::base() . '/main-category/edit?id=' . $category->main_category_id) ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                <a href="<?= Url::to(Url::base() . '/main-category/delete?id=' . $category->main_category_id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
