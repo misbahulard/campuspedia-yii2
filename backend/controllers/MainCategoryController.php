@@ -2,9 +2,16 @@
 
 namespace backend\controllers;
 
-use yii\web\Controller;
+use Yii;
+use yii\base\Model;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\data\Pagination;
-use backend\models\Country;
+use yii\helpers\Url;
+use yii\helpers\VarDumper;
+use yii\web\Controller;
+
+use backend\models\MainCategory;
 
 class MainCategoryController extends Controller
 {
@@ -39,8 +46,20 @@ class MainCategoryController extends Controller
         ];
     }
     
-    public function ActionIndex()
+    public function actionIndex()
     {
+        $query = MainCategory::find();
         
+        $pagination = new Pagination([
+            'defaultPageSize' => 5, 
+            'totalCount' => $query->count()
+        ]);
+
+        $categories = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+
+        return $this->render('index', [
+            'categories' => $categories,
+            'pagination' => $pagination
+        ]);
     }
 }
