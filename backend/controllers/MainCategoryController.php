@@ -110,7 +110,7 @@ class MainCategoryController extends Controller
                 return $this->redirect(Url::to(['/main-category/create']));
             }   
         } else {
-            return $this->render('create', ['category' => $category]);
+            return $this->render('edit', ['category' => $category]);
         }
     }
 
