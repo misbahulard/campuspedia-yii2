@@ -4,47 +4,42 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-use dosamigos\google\maps\LatLng;
-use dosamigos\google\maps\services\DirectionsWayPoint;
-use dosamigos\google\maps\services\TravelMode;
-use dosamigos\google\maps\overlays\PolylineOptions;
-use dosamigos\google\maps\services\DirectionsRenderer;
-use dosamigos\google\maps\services\DirectionsService;
-use dosamigos\google\maps\overlays\InfoWindow;
-use dosamigos\google\maps\overlays\Marker;
-use dosamigos\google\maps\Map;
-use dosamigos\google\maps\services\DirectionsRequest;
+use yii\web\View;
 
-use backend\assets\AdminLtePluginAsset;
-AdminLtePluginAsset::register($this);
+use backend\assets\GmapsAsset;
 
-$coord = new LatLng(['lat' => $campus->campusLocation->latitude, 'lng' => $campus->campusLocation->longtitude]);
-$map = new Map([
-    'width' => '100%',
-    'center' => $coord,
-    'zoom' => 14,
-]);
+GmapsAsset::register($this);
 
-// Lets add a marker now
-$marker = new Marker([
-    'position' => $coord,
-    'title' => $campus->name,
-]);
-
-// Provide a shared InfoWindow to the marker
-$marker->attachInfoWindow(
-    new InfoWindow([
-        'content' => 
-            '<b>' . $campus->name . '</b>' .
-            '<p>' . $campus->campusLocation->street_address . '</p>' .
-            '<p>' . $campus->campusLocation->postal_code . '</p>' . 
-            '<p>' . $campus->campusLocation->city . ', ' . $campus->campusLocation->state_province . '</p>'
-    ])
+$this->registerJs(
+    "
+        function initMap() {
+            var myLatLng = {
+                lat: " . $campus->campusLocation->latitude .",
+                lng: " . $campus->campusLocation->longtitude . "
+            };
+        
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: myLatLng
+            });
+        
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: '" . $campus->name . "'
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+    ",
+    View::POS_READY,
+    'load_map'
 );
 
-$map->addOverlay($marker);
-
 $this->title = 'Campus';
+$this->params['breadcrumbs'] = [
+    ['label' => 'Campus', 'url' => ['index']],
+    ['label' => 'View', 'url' => ['view', 'id' => $campus->campus_id]]
+];
 ?>
 <div class="campus-view">
 
@@ -63,7 +58,7 @@ $this->title = 'Campus';
                     <p><?= $campus->campusLocation->street_address ?></p>
                     <p><?= $campus->campusLocation->postal_code ?></p>
                     <p><?= $campus->campusLocation->city ?>, <?= $campus->campusLocation->state_province ?></p>
-                    <?= $map->display() ?>
+                    <div id="map"></div>
                 </div>
                 <!-- /.box-body -->
             </div>

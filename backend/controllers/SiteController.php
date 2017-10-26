@@ -7,7 +7,6 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
 use backend\models\RegisterForm;
-use backend\models\EntryForm;
 
 /**
  * Site controller
@@ -24,7 +23,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'register', 'error', 'entry'],
+                        'actions' => ['login', 'register', 'error'],
                         'allow' => true,
                     ],
                     [
@@ -121,19 +120,4 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    public function actionEntry()
-    {
-        $model = new EntryForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // valid data received in $model
-
-            // do something meaningful here about $model ...
-
-            return $this->render('entry-confirm', ['model' => $model]);
-        } else {
-            // either the page is initially displayed or there is some validation error
-            return $this->render('entry', ['model' => $model]);
-        }
-    }
 }

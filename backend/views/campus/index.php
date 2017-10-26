@@ -40,9 +40,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Campus', 'url' => ['index']];
                             <td><?= $campus->campusLocation->city ?></td>
                             <td><?= Html::img('@web/img/campuses/' . $campus->logo, ['alt'=>'Logo', 'class'=>'img-responsive img-thumbnail', 'width' => '60']);?></td>
                             <td>
-                                <a href="<?= Url::to('campus/view?id=' . $campus->campus_id) ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                <a href="<?= Url::to('campus/edit?id=' . $campus->campus_id) ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                <a href="<?= Url::to('campus/delete?id=' . $campus->campus_id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                <a href="<?= Url::to(Url::base() . '/campus/view?id=' . $campus->campus_id) ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                <a href="<?= Url::to(Url::base() . '/campus/edit?id=' . $campus->campus_id) ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                <a href="<?= Url::to(Url::base() . '/campus/delete?id=' . $campus->campus_id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
