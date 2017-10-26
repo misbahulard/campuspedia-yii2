@@ -49,6 +49,13 @@ return [
                 'dmstr\web\AdminLteAsset' => [
                     'skin' => 'skin-red',
                 ],
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => 'AIzaSyCtqb2S0R5L-jBWGyuwhhgF51fMu2q1mlk',
+                        'language' => 'id',
+                        'version' => '3.1.18'
+                    ]
+                ]
             ],
         ],
     ],
