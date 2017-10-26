@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use backend\models\MainCategory;
 
 class Category extends ActiveRecord
 {
@@ -18,7 +19,12 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'main_category_id'], 'required'],
         ];
+    }
+
+    public function getMainCategory()
+    {
+        return $this->hasOne(MainCategory::className(), ['main_category_id' => 'main_category_id']); 
     }
 }
