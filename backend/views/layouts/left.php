@@ -39,9 +39,9 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Event List', 'icon' => 'cube', 'url' => ['/event'],],
-                            ['label' => 'Main Category', 'icon' => 'th', 'url' => ['/event-main-category'],],
-                            ['label' => 'Category', 'icon' => 'list-ul', 'url' => ['/event-category'],],
-                            ['label' => 'Suggestion', 'icon' => 'bullhorn', 'url' => ['/event-suggestion'],],
+                            ['label' => 'Main Category', 'icon' => 'th', 'url' => ['/main-category'],],
+                            ['label' => 'Category', 'icon' => 'list-ul', 'url' => ['/category'],],
+                            ['label' => 'Suggestion', 'icon' => 'bullhorn', 'url' => ['/suggestion'],],
                         ],
                     ],
                 ],
