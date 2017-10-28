@@ -82,7 +82,7 @@ $this->params['breadcrumbs'] = [
                                 <?php
                                     echo $form->field($campusLocation, 'state_province')->dropdownList(
                                         $provinces,
-                                        ['prompt'=>'Select Category']
+                                        ['prompt'=>'Select Province']
                                     );
                                 ?>
                                 <?= $form->field($campusLocation, 'latitude')->textInput(['readonly' => true]) ?>

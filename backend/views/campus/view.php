@@ -52,6 +52,7 @@ $this->params['breadcrumbs'] = [
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <?= Html::img('@web/img/campuses/' . $campus->logo, ['alt'=>'Logo', 'class'=>'img-responsive pull-right', 'width' => '150px']);?>
                     <h2><?= $campus->name ?></h2>
                     <p>Website: <a href="http://<?= $campus->web ?>"><?= $campus->web ?></a></p>
                     <p>Location: </p>
