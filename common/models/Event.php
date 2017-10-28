@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 use yii\db\ActiveRecord;
 
-class Campus extends ActiveRecord
+class Event extends ActiveRecord
 {
 
     public $imageFile;
 
     public static function tableName()
     {
-        return 'campuses';
+        return 'events';
     }
 
     /**
@@ -21,24 +21,24 @@ class Campus extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'web'], 'required'],
+            [['category_id', 'campus_id', 'name', 'description', 'event_date', 'status'], 'required'],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
     /**
-     * Fungsi untuk upload logo kampus yang membuat baru
+     * Fungsi untuk upload poster event yang membuat baru
      */
     public function upload()
     {
         if ($this->validate()) {
             if ($this->imageFile != null) {
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
-                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/campuses/' . $newName));
+                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/events/' . $newName));
                 $this->imageFile = null;
-                $this->logo = $newName;
+                $this->photo = $newName;
             } else {
-                $this->logo = 'default.jpg';
+                $this->photo = 'default.jpg';
             }
             return true;
         } else {
@@ -47,21 +47,21 @@ class Campus extends ActiveRecord
     }
 
     /**
-     * Fungsi untuk upload logo kampus yang edit
+     * Fungsi untuk upload poster event yang edit
      */
     public function uploadEdit()
     {
         if ($this->validate()) {
             if ($this->imageFile != null) {
                 if ($this->photo != 'default.jpg') {
-                    if (!unlink(Yii::getAlias('@frontend/web/img/campuses/' . $this->logo))) {
+                    if (!unlink(Yii::getAlias('@frontend/web/img/events/' . $this->photo))) {
                         Yii::$app->session->setFlash('error', 'Failed to delete previous image');
                     }
                 }
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
-                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/campuses/' . $newName));
+                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/events/' . $newName));
                 $this->imageFile = null;
-                $this->logo = $newName;
+                $this->photo = $newName;
             }
             return true;
         } else {
@@ -70,19 +70,19 @@ class Campus extends ActiveRecord
     }
 
     /**
-     * Fungsi untuk menghapus campus
-     * Dan menghapus gambar logo kampus
+     * Fungsi untuk menghapus event
+     * Dan menghapus gambar poster event
      * @return boolean
      */
     public function destroy()
     {
-        if ($this->logo != 'default.jpg') {
-            if (unlink(Yii::getAlias('@frontend/web/img/campuses/' . $this->logo))) {
+        if ($this->photo != 'default.jpg') {
+            if (unlink(Yii::getAlias('@frontend/web/img/events/' . $this->photo))) {
                 if ($this->delete()) {
-                    Yii::$app->session->setFlash('success', 'Campus has been deleted');
+                    Yii::$app->session->setFlash('success', 'event has been deleted');
                     return true;
                 } else {
-                    Yii::$app->session->setFlash('error', 'Failed to delete campus');
+                    Yii::$app->session->setFlash('error', 'Failed to delete event');
                     return false;
                 }
             } else {
@@ -91,17 +91,27 @@ class Campus extends ActiveRecord
             }
         } else {
             if ($this->delete()) {
-                Yii::$app->session->setFlash('success', 'Campus has been deleted');
+                Yii::$app->session->setFlash('success', 'event has been deleted');
                 return true;
             } else {
-                Yii::$app->session->setFlash('error', 'Failed to delete campus');
+                Yii::$app->session->setFlash('error', 'Failed to delete event');
                 return false;
             }
         }
     }
 
-    public function getCampusLocation()
+    public function getCategory()
     {
-        return $this->hasOne(CampusLocation::className(), ['campus_location_id' => 'campus_location_id']);
+        return $this->hasOne(Category::className(), ['category_id' => 'category_id']);
+    }
+
+    public function getEventLocation()
+    {
+        return $this->hasOne(EventLocation::className(), ['event_location_id' => 'event_location_id']);
+    }
+
+    public function getCampus()
+    {
+        return $this->hasOne(Campus::className(), ['campus_id' => 'campus_id']);
     }
 }

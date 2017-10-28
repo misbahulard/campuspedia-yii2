@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use backend\models\Campus;
-use backend\models\Event;
 use backend\models\LoginForm;
-use backend\models\User;
+use common\models\Campus;
+use common\models\Event;
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;

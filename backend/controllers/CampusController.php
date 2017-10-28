@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use backend\models\Campus;
-use backend\models\CampusLocation;
-use backend\models\Province;
+use common\models\Campus;
+use common\models\CampusLocation;
+use common\models\Province;
 use Yii;
 use yii\base\Model;
 use yii\data\Pagination;
@@ -136,12 +136,12 @@ class CampusController extends Controller
                 $campus->imageFile = UploadedFile::getInstance($campus, 'imageFile');
                 if ($campus->uploadEdit()) {
                     if ($campus->save()) {
-                        Yii::$app->session->setFlash('success', 'Campus has been added successfully');
+                        Yii::$app->session->setFlash('success', 'Campus has been edited successfully');
                         return $this->redirect(Url::to(['/campus/index']));
                     }
                 }
             } else {
-                Yii::$app->session->setFlash('error', 'Failed to add new campus');
+                Yii::$app->session->setFlash('error', 'Failed to edit campus');
                 return $this->redirect(Url::to(['/campus/edit']));
             }
         } else {

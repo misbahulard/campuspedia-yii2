@@ -2,16 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\MainCategory;
 use Yii;
-use yii\base\Model;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\data\Pagination;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
-
-use backend\models\MainCategory;
 
 class MainCategoryController extends Controller
 {
@@ -45,7 +41,7 @@ class MainCategoryController extends Controller
             ],
         ];
     }
-    
+
     /**
      * Menampilkan index.
      *
@@ -54,9 +50,9 @@ class MainCategoryController extends Controller
     public function actionIndex()
     {
         $query = MainCategory::find();
-        
+
         $pagination = new Pagination([
-            'defaultPageSize' => 5, 
+            'defaultPageSize' => 5,
             'totalCount' => $query->count()
         ]);
 
@@ -76,16 +72,16 @@ class MainCategoryController extends Controller
     public function actionCreate()
     {
         $category = new MainCategory();
-        
+
         $postData = Yii::$app->request->post();
-        if ($category->load($postData) && $category->validate() ) {
+        if ($category->load($postData) && $category->validate()) {
             if ($category->save()) {
-                Yii::$app->session->setFlash('success', 'category has been added successfully'); 
+                Yii::$app->session->setFlash('success', 'category has been added successfully');
                 return $this->redirect(Url::to(['/main-category/index']));
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to add new category');
                 return $this->redirect(Url::to(['/main-category/create']));
-            }   
+            }
         } else {
             return $this->render('create', ['category' => $category]);
         }
@@ -99,16 +95,16 @@ class MainCategoryController extends Controller
     public function actionEdit($id)
     {
         $category = MainCategory::findOne(['main_category_id' => $id]);
-        
+
         $postData = Yii::$app->request->post();
-        if ($category->load($postData) && $category->validate() ) {
+        if ($category->load($postData) && $category->validate()) {
             if ($category->save()) {
-                Yii::$app->session->setFlash('success', 'category has been edited successfully'); 
+                Yii::$app->session->setFlash('success', 'category has been edited successfully');
                 return $this->redirect(Url::to(['/main-category/index']));
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to edit category');
                 return $this->redirect(Url::to(['/main-category/create']));
-            }   
+            }
         } else {
             return $this->render('edit', ['category' => $category]);
         }
