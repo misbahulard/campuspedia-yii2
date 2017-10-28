@@ -1,9 +1,9 @@
 <?php
+
 namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-use backend\models\User;
 
 /**
  * Login form
@@ -48,20 +48,6 @@ class LoginForm extends Model
     }
 
     /**
-     * Logs in a user using the provided email and password.
-     *
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser());
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Finds user by [[email]]
      *
      * @return User|null
@@ -73,5 +59,19 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    /**
+     * Logs in a user using the provided email and password.
+     *
+     * @return bool whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser());
+        } else {
+            return false;
+        }
     }
 }

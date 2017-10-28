@@ -4,8 +4,6 @@ namespace backend\models;
 
 use yii\db\ActiveRecord;
 
-use backend\models\Event;
-
 class EventLocation extends ActiveRecord
 {
     public static function tableName()

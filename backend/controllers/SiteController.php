@@ -1,16 +1,15 @@
 <?php
-namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use backend\models\LoginForm;
-use backend\models\RegisterForm;
+namespace backend\controllers;
 
 use backend\models\Campus;
 use backend\models\Event;
+use backend\models\LoginForm;
 use backend\models\User;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 
 /**
  * Site controller for DASHBOARD
@@ -106,7 +105,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $this->layout = '//main-login';
-        
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

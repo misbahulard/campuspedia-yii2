@@ -3,7 +3,6 @@
 namespace backend\models;
 
 use yii\db\ActiveRecord;
-use backend\models\Campus;
 
 class CampusLocation extends ActiveRecord
 {
