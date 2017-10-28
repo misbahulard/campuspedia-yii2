@@ -38,7 +38,7 @@ class Event extends ActiveRecord
         if ($this->validate()) {
             if ($this->imageFile != null) {
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
-                $this->imageFile->saveAs('img/events/' . $newName);
+                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/events/' . $newName));
                 $this->imageFile = null;
                 $this->photo = $newName;    
             } else {
@@ -57,11 +57,13 @@ class Event extends ActiveRecord
     {
         if ($this->validate()) {
             if ($this->imageFile != null) {
-                if(!unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
-                    Yii::$app->session->setFlash('error', 'Failed to delete previous image');
+                if ($this->photo != 'default.jpg') {
+                    if(!unlink(Yii::getAlias('@frontend/web/img/events/' . $this->photo))) {
+                        Yii::$app->session->setFlash('error', 'Failed to delete previous image');
+                    }
                 }
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
-                $this->imageFile->saveAs('img/events/' . $newName);
+                $this->imageFile->saveAs(Yii::getAlias('@frontend/web/img/events/' . $newName));
                 $this->imageFile = null;
                 $this->photo = $newName;    
             }
@@ -79,7 +81,7 @@ class Event extends ActiveRecord
     public function destroy()
     {
         if ($this->photo != 'default.jpg') {
-            if(unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
+            if(unlink(Yii::getAlias('@frontend/web/img/events/' . $this->photo))) {
                 if ($this->delete()) {  
                     Yii::$app->session->setFlash('success', 'event has been deleted');  
                     return true;

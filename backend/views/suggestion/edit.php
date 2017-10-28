@@ -123,7 +123,7 @@ $this->params['breadcrumbs'] = [
                                 ?>
                                 <?= $form->field($eventLocation, 'latitude')->textInput(['readonly' => true]) ?>
                                 <?= $form->field($eventLocation, 'longtitude')->textInput(['readonly' => true]) ?>
-                                <?= $form->field($event, 'status')->hiddenInput(['value' => 1])->label(false) ?>
+                                <?= $form->field($event, 'status')->hiddenInput(['value' => 0])->label(false) ?>
 
                                 <div id="map"></div>
                             

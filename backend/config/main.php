@@ -44,6 +44,12 @@ return [
             'rules' => [
             ],
         ],
+        'urlManagerFrontend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => '/campuspedia-yii2/frontend/web',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'assetManager' => [
             'bundles' => [
                 'dmstr\web\AdminLteAsset' => [

@@ -1,9 +1,8 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
 use yii\db\ActiveRecord;
-use backend\models\Campus;
 
 class CampusLocation extends ActiveRecord
 {
@@ -27,4 +26,5 @@ class CampusLocation extends ActiveRecord
     {
         return $this->hasMany(Campus::className(), ['campus_location_id' => 'campus_location_id']);
     }
+
 }

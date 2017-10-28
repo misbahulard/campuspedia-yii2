@@ -1,12 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\LinkPager;
-
-use yii\web\View;
-
 use backend\assets\GmapsAsset;
+use yii\helpers\Html;
+use yii\web\View;
 
 GmapsAsset::register($this);
 
@@ -14,7 +10,7 @@ $this->registerJs(
     "
         function initMap() {
             var myLatLng = {
-                lat: " . $campus->campusLocation->latitude .",
+                lat: " . $campus->campusLocation->latitude . ",
                 lng: " . $campus->campusLocation->longtitude . "
             };
         
@@ -43,7 +39,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="campus-view">
 
-    
+
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -52,7 +48,7 @@ $this->params['breadcrumbs'] = [
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <?= Html::img('@web/img/campuses/' . $campus->logo, ['alt'=>'Logo', 'class'=>'img-responsive pull-right', 'width' => '150px']);?>
+                    <?= Html::img(Yii::$app->urlManagerFrontend->createUrl('img/campuses/' . $campus->logo), ['alt' => 'Logo', 'class' => 'img-responsive pull-right', 'width' => '150px']); ?>
                     <h2><?= $campus->name ?></h2>
                     <p>Website: <a href="http://<?= $campus->web ?>"><?= $campus->web ?></a></p>
                     <p>Location: </p>

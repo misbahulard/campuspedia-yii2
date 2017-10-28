@@ -1,9 +1,10 @@
 <?php
 
+use backend\assets\AdminLtePluginAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-use backend\assets\AdminLtePluginAsset;
+
 AdminLtePluginAsset::register($this);
 
 $this->title = 'Event Suggestion';
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Event Suggestion', 'url' => ['inde
                 <!-- /.box-header -->
                 <div class="box-body">
                     <table id="example2" class="table table-bordered table-hover">
-                    <thead>
+                        <thead>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -30,36 +31,40 @@ $this->params['breadcrumbs'][] = ['label' => 'Event Suggestion', 'url' => ['inde
                             <th>Poster</th>
                             <th>Action</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <?php foreach ($events as $event): ?>
-                        <tr>
-                            <td><?= $event->event_id ?></td>
-                            <td><?= $event->name ?></td>
-                            <td><?= $event->category->name ?></td>
-                            <td><?= $event->campus->name ?></td>
-                            <td><?= $event->eventLocation->city ?></td>
-                            <td><?= Html::img('@web/img/events/' . $event->photo, ['alt'=>'Poster', 'class'=>'img-responsive img-thumbnail', 'width' => '60']);?></td>
-                            <td>
-                                <a href="<?= Url::to(Url::base() . '/suggestion/view?id=' . $event->event_id) ?>" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                                <a href="<?= Url::to(Url::base() . '/suggestion/edit?id=' . $event->event_id) ?>" class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                <a href="<?= Url::to(Url::base() . '/suggestion/delete?id=' . $event->event_id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                <a href="<?= Url::to(Url::base() . '/suggestion/accept?id=' . $event->event_id) ?>" class="btn btn-success"><i class="fa fa-check"></i> Accept</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><?= $event->event_id ?></td>
+                                <td><?= $event->name ?></td>
+                                <td><?= $event->category->name ?></td>
+                                <td><?= $event->campus->name ?></td>
+                                <td><?= $event->eventLocation->city ?></td>
+                                <td><?= Html::img(Yii::$app->urlManagerFrontend->createUrl('img/events/' . $event->photo), ['alt' => 'Poster', 'class' => 'img-responsive img-thumbnail', 'width' => '60']); ?></td>
+                                <td>
+                                    <a href="<?= Url::to(Url::base() . '/suggestion/view?id=' . $event->event_id) ?>"
+                                       class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                                    <a href="<?= Url::to(Url::base() . '/suggestion/edit?id=' . $event->event_id) ?>"
+                                       class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                    <a href="<?= Url::to(Url::base() . '/suggestion/delete?id=' . $event->event_id) ?>"
+                                       class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    <a href="<?= Url::to(Url::base() . '/suggestion/accept?id=' . $event->event_id) ?>"
+                                       class="btn btn-success"><i class="fa fa-check"></i> Accept</a>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Campus</th>
-                        <th>City</th>
-                        <th>Poster</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Campus</th>
+                            <th>City</th>
+                            <th>Poster</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
                     </table>
                     <?= LinkPager::widget(['pagination' => $pagination]) ?>
                 </div>
