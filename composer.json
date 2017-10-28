@@ -20,7 +20,10 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dmstr/yii2-adminlte-asset": "2.5",
         "almasaeed2010/adminlte": "~2.4",
-        "2amigos/yii2-google-maps-library": "*"
+        "2amigos/yii2-google-maps-library": "*",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "2amigos/yii2-ckeditor-widget": "^2.1",
+        "2amigos/yii2-tinymce-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
