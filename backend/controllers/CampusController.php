@@ -2,19 +2,16 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\base\Model;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\data\Pagination;
-use yii\helpers\Url;
-use yii\helpers\VarDumper;
-use yii\web\Controller;
-use yii\web\UploadedFile;
-
 use backend\models\Campus;
 use backend\models\CampusLocation;
 use backend\models\Province;
+use Yii;
+use yii\base\Model;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 class CampusController extends Controller
 {
@@ -60,7 +57,7 @@ class CampusController extends Controller
         $query = Campus::find();
 
         $pagination = new Pagination([
-            'defaultPageSize' => 5, 
+            'defaultPageSize' => 5,
             'totalCount' => $query->count()
         ]);
 
@@ -89,30 +86,30 @@ class CampusController extends Controller
      * @return string view
      */
     public function actionCreate()
-    {   
+    {
         $campus = new Campus();
         $campusLocation = new CampusLocation();
         $provinces = Province::find()
             ->select(['name'])
             ->indexBy('name')
             ->column();
-        
+
         $postData = Yii::$app->request->post();
         if ($campus->load($postData) && $campusLocation->load($postData) && Model::validateMultiple([$campus, $campusLocation])) {
-            if ($campusLocation->save()) {                
+            if ($campusLocation->save()) {
                 $campus->campus_location_id = $campusLocation->campus_location_id;
                 // Upload File
                 $campus->imageFile = UploadedFile::getInstance($campus, 'imageFile');
                 if ($campus->upload()) {
                     if ($campus->save()) {
-                        Yii::$app->session->setFlash('success', 'Campus has been added successfully'); 
+                        Yii::$app->session->setFlash('success', 'Campus has been added successfully');
                         return $this->redirect(Url::to(['/campus/index']));
                     }
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to add new campus');
                 return $this->redirect(Url::to(['/campus/create']));
-            }   
+            }
         } else {
             return $this->render('create', ['campus' => $campus, 'campusLocation' => $campusLocation, 'provinces' => $provinces]);
         }
@@ -123,14 +120,14 @@ class CampusController extends Controller
      * @return string view
      */
     public function actionEdit($id)
-    {   
+    {
         $campus = Campus::findOne(['campus_id' => $id]);
         $campusLocation = CampusLocation::findOne(['campus_location_id' => $campus->campus_location_id]);
         $provinces = Province::find()
             ->select(['name'])
             ->indexBy('name')
             ->column();
-        
+
         $postData = Yii::$app->request->post();
         if ($campus->load($postData) && $campusLocation->load($postData) && Model::validateMultiple([$campus, $campusLocation])) {
             if ($campusLocation->save()) {
@@ -139,14 +136,14 @@ class CampusController extends Controller
                 $campus->imageFile = UploadedFile::getInstance($campus, 'imageFile');
                 if ($campus->uploadEdit()) {
                     if ($campus->save()) {
-                        Yii::$app->session->setFlash('success', 'Campus has been added successfully'); 
+                        Yii::$app->session->setFlash('success', 'Campus has been added successfully');
                         return $this->redirect(Url::to(['/campus/index']));
                     }
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to add new campus');
                 return $this->redirect(Url::to(['/campus/edit']));
-            }   
+            }
         } else {
             return $this->render('edit', ['campus' => $campus, 'campusLocation' => $campusLocation, 'provinces' => $provinces]);
         }

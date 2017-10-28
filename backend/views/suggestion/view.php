@@ -43,7 +43,7 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="event-view">
 
-    
+
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'] = [
                 <div class="box-body">
                     <div class="row">
                         <div class="col-md-4 col-xs-12 pull-right">
-                            <?= Html::img('@web/img/events/' . $event->photo, ['alt'=>'Poster', 'class'=>'img-responsive img-thumbnail pull-right', 'width' => '300px']);?>
+                            <?= Html::img(Yii::$app->urlManagerFrontend->createUrl('img/events/' . $event->photo), ['alt'=>'Poster', 'class'=>'img-responsive img-thumbnail pull-right', 'width' => '300px']);?>
                         </div>
                         <div class="col-md-8 col-xs-12">
                             <h2><?= $event->name ?></h2>

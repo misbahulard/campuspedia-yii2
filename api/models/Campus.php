@@ -1,10 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-use backend\models\CampusLocation;
 
 class Campus extends ActiveRecord
 {
@@ -37,7 +36,7 @@ class Campus extends ActiveRecord
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
                 $this->imageFile->saveAs('img/campuses/' . $newName);
                 $this->imageFile = null;
-                $this->logo = $newName;    
+                $this->logo = $newName;
             } else {
                 $this->logo = 'default.jpg';
             }
@@ -54,13 +53,13 @@ class Campus extends ActiveRecord
     {
         if ($this->validate()) {
             if ($this->imageFile != null) {
-                if(!unlink(Yii::getAlias('@app/web/img/campuses/' . $this->logo))) {
+                if (!unlink(Yii::getAlias('@app/web/img/campuses/' . $this->logo))) {
                     Yii::$app->session->setFlash('error', 'Failed to delete previous image');
                 }
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
                 $this->imageFile->saveAs('img/campuses/' . $newName);
                 $this->imageFile = null;
-                $this->logo = $newName;    
+                $this->logo = $newName;
             }
             return true;
         } else {
@@ -76,21 +75,21 @@ class Campus extends ActiveRecord
     public function destroy()
     {
         if ($this->logo != 'default.jpg') {
-            if(unlink(Yii::getAlias('@app/web/img/campuses/' . $this->logo))) {
-                if ($this->delete()) {  
-                    Yii::$app->session->setFlash('success', 'Campus has been deleted');  
+            if (unlink(Yii::getAlias('@app/web/img/campuses/' . $this->logo))) {
+                if ($this->delete()) {
+                    Yii::$app->session->setFlash('success', 'Campus has been deleted');
                     return true;
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to delete campus');
                     return false;
-                }    
+                }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to delete image');
                 return false;
             }
         } else {
-            if ($this->delete()) {  
-                Yii::$app->session->setFlash('success', 'Campus has been deleted');  
+            if ($this->delete()) {
+                Yii::$app->session->setFlash('success', 'Campus has been deleted');
                 return true;
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to delete campus');
@@ -101,6 +100,6 @@ class Campus extends ActiveRecord
 
     public function getCampusLocation()
     {
-        return $this->hasOne(CampusLocation::className(), ['campus_location_id' => 'campus_location_id']); 
+        return $this->hasOne(CampusLocation::className(), ['campus_location_id' => 'campus_location_id']);
     }
 }

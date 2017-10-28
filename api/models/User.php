@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -11,6 +11,16 @@ class User extends ActiveRecord implements IdentityInterface
     public static function tableName()
     {
         return 'users';
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        // remove fields that contain sensitive information
+        unset($fields['password'], $fields['remember_token']);
+
+        return $fields;
     }
 
     /**
