@@ -18,7 +18,7 @@ use backend\models\Event;
 use backend\models\EventLocation;
 use backend\models\Province;
 
-class EventController extends Controller
+class SuggestionController extends Controller
 {
 
     /**
@@ -31,7 +31,7 @@ class EventController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'edit', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'edit', 'delete', 'accept'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,7 +59,7 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $query = Event::find()->where(['status' => 1]);
+        $query = Event::find()->where(['status' => 0]);
 
         $pagination = new Pagination([
             'defaultPageSize' => 5, 
@@ -116,12 +116,12 @@ class EventController extends Controller
                 if ($event->upload()) {
                     if ($event->save()) {
                         Yii::$app->session->setFlash('success', 'Event has been added successfully'); 
-                        return $this->redirect(Url::to(['/event/index']));
+                        return $this->redirect(Url::to(['/suggestion/index']));
                     }
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to add new campus');
-                return $this->redirect(Url::to(['/event/create']));
+                return $this->redirect(Url::to(['/suggestion/create']));
             }   
         } else {
             return $this->render('create', [
@@ -164,12 +164,12 @@ class EventController extends Controller
                 if ($event->uploadEdit()) {
                     if ($event->save()) {
                         Yii::$app->session->setFlash('success', 'Event has been edited successfully'); 
-                        return $this->redirect(Url::to(['/event/index']));
+                        return $this->redirect(Url::to(['/suggestion/index']));
                     }
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to edit event');
-                return $this->redirect(Url::to(['/event/edit']));
+                return $this->redirect(Url::to(['/suggestion/edit']));
             }   
         } else {
             return $this->render('edit', [
@@ -189,6 +189,23 @@ class EventController extends Controller
             if ($event->destroy()) {
                 return $this->redirect(['index']);
             }
+        }
+    }
+
+    /**
+     * Menyetujui Saran Event
+     * @return redirect to index
+     */
+    public function actionAccept($id)
+    {
+        $event = Event::findOne(['event_id' => $id]);
+        $event->status = 1;
+        if ($event->save()) {
+            Yii::$app->session->setFlash('success', 'Accept event success');
+            return $this->redirect(Url::to(['/suggestion/index']));
+        } else {
+            Yii::$app->session->setFlash('error', 'Accept event failed');
+            return $this->redirect(Url::to(['/suggestion/index']));
         }
     }
 }

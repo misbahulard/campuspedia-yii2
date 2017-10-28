@@ -55,7 +55,7 @@ $this->registerJs(
 
 $this->title = 'Event';
 $this->params['breadcrumbs'] = [
-    ['label' => 'Event', 'url' => ['index']],
+    ['label' => 'Event Suggestion', 'url' => ['index']],
     ['label' => 'Add', 'url' => ['create']]
 ];
 ?>
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'] = [
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Edit Event</h3>
+                    <h3 class="box-title">Edit Event Suggestion</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
