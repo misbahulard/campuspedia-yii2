@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+use yii\helpers\Url;
 
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = ['label' => 'Dashboard', 'url' => ['index']];
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Dashboard', 'url' => ['index']];
             <div class="icon">
               <i class="fa fa-calendar-o"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::to(Url::base() . '/event') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Dashboard', 'url' => ['index']];
             <div class="icon">
               <i class="fa fa-building-o"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::to(Url::base() . '/campus') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -49,7 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Dashboard', 'url' => ['index']];
             <div class="icon">
               <i class="fa fa-bullhorn"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?= Url::to(Url::base() . '/suggestion') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Dashboard', 'url' => ['index']];
             <div class="icon">
               <i class="fa fa-user-o"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">&nbsp;</a>
           </div>
         </div>
         <!-- ./col -->
