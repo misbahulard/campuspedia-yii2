@@ -8,8 +8,12 @@ use yii\filters\AccessControl;
 use backend\models\LoginForm;
 use backend\models\RegisterForm;
 
+use backend\models\Campus;
+use backend\models\Event;
+use backend\models\User;
+
 /**
- * Site controller
+ * Site controller for DASHBOARD
  */
 class SiteController extends Controller
 {
@@ -61,29 +65,38 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $campusTotal = Campus::find()->count();
+        $eventTotal = Event::find()->where(['status' => 1])->count();
+        $suggestionTotal = Event::find()->where(['status' => 0])->count();
+        $userTotal = User::find()->where(['role_id' => 2])->count();
+        return $this->render('index', [
+            'campusTotal' => $campusTotal,
+            'eventTotal' => $eventTotal,
+            'suggestionTotal' => $suggestionTotal,
+            'userTotal' => $userTotal
+        ]);
     }
 
     /**
      * Signs user up.
-     *
+     * DISABLED
      * @return mixed
      */
-    public function actionRegister()
-    {
-        $model = new RegisterForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->register()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
+    // public function actionRegister()
+    // {
+    //     $model = new RegisterForm();
+    //     if ($model->load(Yii::$app->request->post())) {
+    //         if ($user = $model->register()) {
+    //             if (Yii::$app->getUser()->login($user)) {
+    //                 return $this->goHome();
+    //             }
+    //         }
+    //     }
 
-        return $this->render('register', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('register', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
     /**
      * Login action.
