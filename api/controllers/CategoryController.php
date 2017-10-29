@@ -2,35 +2,33 @@
 
 namespace api\controllers;
 
-use api\models\Campus;
+
+use api\models\Category;
 use Yii;
 use yii\data\Pagination;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 
-class CampusController extends Controller
+class CategoryController extends Controller
 {
-    public $img_path = "http://campuspedia.madamita.ml/img/campuses/";
-
     public function actionIndex()
     {
         $perPage = 20;
-        $query = Campus::find();
+        $query = Category::find();
 
         $pagination = new Pagination([
             'defaultPageSize' => $perPage,
             'totalCount' => $query->count()
         ]);
 
-        $campuses = $query->offset($pagination->offset)->limit($pagination->limit)->with('campusLocation')->asArray()->all();
+        $categories = $query->offset($pagination->offset)->limit($pagination->limit)->all();
 
         $totalCount = intval($query->count());
         $pageCount = ceil($totalCount / $perPage);
         $currentPage = Yii::$app->request->get('page', 1);
 
         return [
-            'data' => $campuses,
-            'logo_path' => $this->img_path,
+            'data' => $categories,
             'meta' => [
                 'totalCount' => $totalCount,
                 'pageCount' => $pageCount,
@@ -40,22 +38,22 @@ class CampusController extends Controller
         ];
     }
 
+    /**
+     * menampilkan daftar category yang memiliki id main_category yang sama
+     *
+     * @param $id adalah id dari main_category bukan id category
+     * @return array
+     */
     public function actionView($id)
     {
-        $campus = Campus::findOne(['campus_id' => $id]);
+        $category = Category::find()->where(['main_category_id' => $id])->all();
 
-        if ($campus == null) {
-            throw new NotFoundHttpException('Campus not found!');
+        if ($category == null) {
+            throw new NotFoundHttpException('Category not found!');
         }
 
         return [
-            'data' => [
-                'campus_id' => $campus->campus_id,
-                'name' => $campus->name,
-                'web' => $campus->web,
-                'logo' => $this->img_path . $campus->logo,
-                'location' => $campus->campusLocation
-            ],
+            'data' => $category
         ];
     }
 }

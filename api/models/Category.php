@@ -1,10 +1,8 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
-use Yii;
 use yii\db\ActiveRecord;
-use backend\models\MainCategory;
 
 class Category extends ActiveRecord
 {
@@ -25,6 +23,6 @@ class Category extends ActiveRecord
 
     public function getMainCategory()
     {
-        return $this->hasOne(MainCategory::className(), ['main_category_id' => 'main_category_id']); 
+        return $this->hasOne(MainCategory::className(), ['main_category_id' => 'main_category_id']);
     }
 }

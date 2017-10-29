@@ -1,13 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
 use Yii;
 use yii\db\ActiveRecord;
-
-use backend\models\Category;
-use backend\models\EventLocation;
-use backend\models\Campus;
 
 class Event extends ActiveRecord
 {
@@ -40,7 +36,7 @@ class Event extends ActiveRecord
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
                 $this->imageFile->saveAs('img/events/' . $newName);
                 $this->imageFile = null;
-                $this->photo = $newName;    
+                $this->photo = $newName;
             } else {
                 $this->photo = 'default.jpg';
             }
@@ -57,13 +53,13 @@ class Event extends ActiveRecord
     {
         if ($this->validate()) {
             if ($this->imageFile != null) {
-                if(!unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
+                if (!unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
                     Yii::$app->session->setFlash('error', 'Failed to delete previous image');
                 }
                 $newName = md5(time()) . '.' . $this->imageFile->extension;
                 $this->imageFile->saveAs('img/events/' . $newName);
                 $this->imageFile = null;
-                $this->photo = $newName;    
+                $this->photo = $newName;
             }
             return true;
         } else {
@@ -79,21 +75,21 @@ class Event extends ActiveRecord
     public function destroy()
     {
         if ($this->photo != 'default.jpg') {
-            if(unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
-                if ($this->delete()) {  
-                    Yii::$app->session->setFlash('success', 'event has been deleted');  
+            if (unlink(Yii::getAlias('@app/web/img/events/' . $this->photo))) {
+                if ($this->delete()) {
+                    Yii::$app->session->setFlash('success', 'event has been deleted');
                     return true;
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to delete event');
                     return false;
-                }    
+                }
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to delete image');
                 return false;
             }
         } else {
-            if ($this->delete()) {  
-                Yii::$app->session->setFlash('success', 'event has been deleted');  
+            if ($this->delete()) {
+                Yii::$app->session->setFlash('success', 'event has been deleted');
                 return true;
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to delete event');
@@ -109,7 +105,7 @@ class Event extends ActiveRecord
 
     public function getEventLocation()
     {
-        return $this->hasOne(EventLocation::className(), ['event_location_id' => 'event_location_id']); 
+        return $this->hasOne(EventLocation::className(), ['event_location_id' => 'event_location_id']);
     }
 
     public function getCampus()

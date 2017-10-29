@@ -2,35 +2,33 @@
 
 namespace api\controllers;
 
-use api\models\Campus;
+
+use api\models\MainCategory;
 use Yii;
 use yii\data\Pagination;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 
-class CampusController extends Controller
+class MainCategoryController extends Controller
 {
-    public $img_path = "http://campuspedia.madamita.ml/img/campuses/";
-
     public function actionIndex()
     {
         $perPage = 20;
-        $query = Campus::find();
+        $query = MainCategory::find();
 
         $pagination = new Pagination([
             'defaultPageSize' => $perPage,
             'totalCount' => $query->count()
         ]);
 
-        $campuses = $query->offset($pagination->offset)->limit($pagination->limit)->with('campusLocation')->asArray()->all();
+        $main_categories = $query->offset($pagination->offset)->limit($pagination->limit)->with('categories')->asArray()->all();
 
         $totalCount = intval($query->count());
         $pageCount = ceil($totalCount / $perPage);
         $currentPage = Yii::$app->request->get('page', 1);
 
         return [
-            'data' => $campuses,
-            'logo_path' => $this->img_path,
+            'data' => $main_categories,
             'meta' => [
                 'totalCount' => $totalCount,
                 'pageCount' => $pageCount,
@@ -42,19 +40,17 @@ class CampusController extends Controller
 
     public function actionView($id)
     {
-        $campus = Campus::findOne(['campus_id' => $id]);
+        $main_category = MainCategory::findOne(['main_category_id' => $id]);
 
-        if ($campus == null) {
-            throw new NotFoundHttpException('Campus not found!');
+        if ($main_category == null) {
+            throw new NotFoundHttpException('Main Category not found!');
         }
 
         return [
             'data' => [
-                'campus_id' => $campus->campus_id,
-                'name' => $campus->name,
-                'web' => $campus->web,
-                'logo' => $this->img_path . $campus->logo,
-                'location' => $campus->campusLocation
+                'main_category_id' => $main_category->main_category_id,
+                'name' => $main_category->name,
+                'category' => $main_category->categories
             ],
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace api\models;
 
 use Yii;
 use yii\db\ActiveRecord;

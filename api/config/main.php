@@ -51,7 +51,14 @@ return [
                         'user',
                         'campus',
                         'event',
-                    ]
+                        'category',
+                        'main-category'
+                    ],
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                        'POST register' => 'register',
+                        'GET category/{id}' => 'by-category'
+                    ],
                 ],
             ],
         ],
